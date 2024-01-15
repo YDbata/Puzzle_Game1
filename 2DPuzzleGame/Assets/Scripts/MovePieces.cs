@@ -13,6 +13,11 @@ public class MovePieces : MonoBehaviour
     Point newIndex;
     Vector2 mouseStart;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,16 +52,37 @@ public class MovePieces : MonoBehaviour
             Vector2 pos = game.getPositionFromPoint(moving.index);
             if (!newIndex.Equals(moving.index))
             {
-                pos += Point.mult(new Point(add.x, -add.y), 16).ToVector();
+                pos += Point.mult(add, 16).ToVector();
             }
 
             moving.MovePositionTo(pos);
         }
     }
 
-    public void MovePiece(Point index)
+    /// <summary>
+    /// touch시 블록 슬라이드 기능 구현
+    /// </summary>
+    /// <param name="piece"></param>
+    public void MovePiece(NodePiece piece)
     {
+        // 이미 움직이는 piece가 있으면 중단
         if (moving != null) return;
-        moving = 
+        // 마우스(손)의 움직임따라 piece위치를 따라오게 변경
+        moving = piece;
+        mouseStart = Input.mousePosition;
+    }
+
+    public void DropPiece()
+    {
+        // 움직이는 piece가 없으면 반환
+        if (moving == null) return;
+        Debug.Log("Drop");
+        
+        // 새로운 인덱스와 움직인 블록의 index가 같지 않으면 움직인 블로과 바뀌는 블록을 flip시킴
+        // 같을 경우 piece를 원래 자리로 옮김
+
+
+        moving = null;
     }
 }
+ 

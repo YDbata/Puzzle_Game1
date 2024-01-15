@@ -72,12 +72,14 @@ public class NodePiece : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         if (updating) return;
-        Debug.Log("Grab : " + transform.name);
+        //Debug.Log("Grap :" + transform.name);
+        MovePieces.instance.MovePiece(this);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (updating) return;
-        Debug.Log("Let go of " + transform.name);
+        //Debug.Log("Drop :" + transform.name);
+        MovePieces.instance.DropPiece();
     }
 }
